@@ -28,7 +28,12 @@ export default function RecipeDetailScreen() {
     return (
       <SafeAreaView style={[styles.container, { backgroundColor: colors.background, justifyContent: 'center', alignItems: 'center' }]}>
         <ThemedText type="subtitle">Recipe not found</ThemedText>
-        <Pressable onPress={() => router.back()} style={styles.backButton}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Go back"
+          accessibilityHint="Returns to previous screen"
+          onPress={() => router.back()}
+          style={styles.backButton}>
           <ThemedText type="smallBold" style={{ color: '#fff' }}>Go Back</ThemedText>
         </Pressable>
       </SafeAreaView>
@@ -50,13 +55,24 @@ export default function RecipeDetailScreen() {
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       {/* Top Bar */}
       <View style={[styles.topBar, { backgroundColor: colors.background }]}>
-        <Pressable onPress={() => router.back()} style={styles.iconButton}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Go back"
+          accessibilityHint="Returns to previous screen"
+          onPress={() => router.back()}
+          style={styles.iconButton}>
           <SymbolView name={{ ios: 'chevron.left', android: 'arrow_back', web: 'arrow_back' }} size={22} tintColor={colors.text} />
         </Pressable>
         <ThemedText type="subtitle" numberOfLines={1} style={styles.topTitle}>
           {recipe.title}
         </ThemedText>
-        <Pressable onPress={() => toggleMyKitchen(recipe.id)} style={styles.iconButton}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityState={{ checked: isSaved }}
+          accessibilityLabel={isSaved ? 'Remove recipe from My Kitchen' : 'Save recipe to My Kitchen'}
+          accessibilityHint="Double tap to toggle recipe in your kitchen"
+          onPress={() => toggleMyKitchen(recipe.id)}
+          style={styles.iconButton}>
           <SymbolView
             name={{ ios: isSaved ? 'bookmark.fill' : 'bookmark', android: isSaved ? 'bookmark' : 'bookmark_border', web: 'bookmark' }}
             size={22}

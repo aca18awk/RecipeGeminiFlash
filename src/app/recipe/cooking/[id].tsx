@@ -59,7 +59,12 @@ export default function CookingModeScreen() {
     return (
       <SafeAreaView style={[styles.container, { backgroundColor: colors.background, justifyContent: 'center', alignItems: 'center' }]}>
         <ThemedText type="subtitle">Recipe not found</ThemedText>
-        <Pressable onPress={() => router.back()} style={styles.exitButton}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Exit cooking mode"
+          accessibilityHint="Returns to previous screen"
+          onPress={() => router.back()}
+          style={styles.exitButton}>
           <ThemedText type="smallBold" style={{ color: '#fff' }}>Exit</ThemedText>
         </Pressable>
       </SafeAreaView>
@@ -76,7 +81,12 @@ export default function CookingModeScreen() {
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       {/* Top Bar */}
       <View style={styles.topBar}>
-        <Pressable onPress={() => router.back()} style={styles.closeButton}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Exit cooking mode"
+          accessibilityHint="Closes cooking mode and returns to recipe details"
+          onPress={() => router.back()}
+          style={styles.closeButton}>
           <SymbolView name={{ ios: 'xmark', android: 'close', web: 'close' }} size={22} tintColor={colors.text} />
         </Pressable>
         <ThemedText type="smallBold">
@@ -118,6 +128,10 @@ export default function CookingModeScreen() {
               ) : (
                 <View style={styles.timerControls}>
                   <Pressable
+                    accessibilityRole="button"
+                    accessibilityState={{ checked: isTimerRunning }}
+                    accessibilityLabel={isTimerRunning ? 'Pause timer' : 'Start timer'}
+                    accessibilityHint="Double tap to start or pause the countdown timer"
                     style={[styles.timerButton, { backgroundColor: isTimerRunning ? '#ef4444' : '#22c55e' }]}
                     onPress={() => setIsTimerRunning(!isTimerRunning)}>
                     <ThemedText type="smallBold" style={{ color: '#fff' }}>
@@ -125,6 +139,9 @@ export default function CookingModeScreen() {
                     </ThemedText>
                   </Pressable>
                   <Pressable
+                    accessibilityRole="button"
+                    accessibilityLabel="Reset timer"
+                    accessibilityHint="Resets timer to original step duration"
                     style={styles.timerResetButton}
                     onPress={() => {
                       setIsTimerRunning(false);
@@ -145,6 +162,10 @@ export default function CookingModeScreen() {
       {/* Navigation Buttons */}
       <View style={styles.footer}>
         <Pressable
+          accessibilityRole="button"
+          accessibilityState={{ disabled: currentStepIndex === 0 }}
+          accessibilityLabel="Previous step"
+          accessibilityHint="Double tap to go to the previous cooking step"
           style={[styles.navButton, currentStepIndex === 0 && styles.disabledButton]}
           disabled={currentStepIndex === 0}
           onPress={() => setCurrentStepIndex(prev => Math.max(0, prev - 1))}>
@@ -153,6 +174,9 @@ export default function CookingModeScreen() {
         </Pressable>
 
         <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={currentStepIndex === recipe.steps.length - 1 ? 'Finish cooking' : 'Next step'}
+          accessibilityHint="Double tap to go to the next cooking step"
           style={[styles.navButton, styles.nextButton]}
           onPress={() => {
             if (currentStepIndex < recipe.steps.length - 1) {
@@ -205,54 +229,47 @@ const styles = StyleSheet.create({
   },
   stepCard: {
     padding: Spacing.five,
-    borderRadius: Spacing.five,
+    borderRadius: Spacing.four,
     gap: Spacing.four,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 3,
   },
   stepBadge: {
     color: '#ea580c',
-    letterSpacing: 1,
+    fontSize: 14,
   },
   stepText: {
-    fontSize: 22,
-    lineHeight: 32,
-    fontWeight: '500',
+    fontSize: 20,
+    lineHeight: 28,
   },
   timerBox: {
-    padding: Spacing.three,
+    padding: Spacing.four,
     borderRadius: Spacing.three,
-    gap: Spacing.two,
+    gap: Spacing.three,
   },
   timerHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: Spacing.two,
   },
-  timerControls: {
-    flexDirection: 'row',
-    gap: Spacing.two,
-  },
-  timerButton: {
-    flex: 1,
-    paddingVertical: Spacing.two,
-    borderRadius: Spacing.two,
-    alignItems: 'center',
-  },
-  timerResetButton: {
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.two,
-    borderRadius: Spacing.two,
-    borderWidth: 1,
-    borderColor: '#cbd5e1',
-    alignItems: 'center',
-  },
   timerFinishedText: {
     color: '#22c55e',
     fontSize: 16,
+  },
+  timerControls: {
+    flexDirection: 'row',
+    gap: Spacing.three,
+  },
+  timerButton: {
+    flex: 1,
+    paddingVertical: Spacing.three,
+    borderRadius: Spacing.three,
+    alignItems: 'center',
+  },
+  timerResetButton: {
+    paddingVertical: Spacing.three,
+    paddingHorizontal: Spacing.four,
+    borderRadius: Spacing.three,
+    backgroundColor: '#e2e8f0',
+    alignItems: 'center',
   },
   footer: {
     flexDirection: 'row',
@@ -275,7 +292,7 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     backgroundColor: '#ea580c',
-    borderColor: '#ea580c',
+    borderWidth: 0,
   },
   navButtonText: {
     fontSize: 16,

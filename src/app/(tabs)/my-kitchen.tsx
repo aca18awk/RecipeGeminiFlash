@@ -67,6 +67,9 @@ export default function MyKitchenScreen() {
               Tap the cooking-pot icon on any recipe card to save it to your kitchen.
             </ThemedText>
             <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="Explore recipes"
+              accessibilityHint="Navigates to recipes list"
               style={styles.exploreButton}
               onPress={() => router.push('/(tabs)')}>
               <ThemedText type="smallBold" style={{ color: '#fff' }}>Explore Recipes</ThemedText>
@@ -79,6 +82,9 @@ export default function MyKitchenScreen() {
                 key={recipe.id}
                 style={[styles.recipeCard, { backgroundColor: colors.backgroundElement }]}>
                 <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel={recipe.title}
+                  accessibilityHint="Double tap to view recipe details"
                   style={styles.cardMain}
                   onPress={() => router.push(`/recipe/${recipe.id}`)}>
                   <Image source={getRecipeImage(recipe.image)} style={styles.recipeImage} />
@@ -95,6 +101,9 @@ export default function MyKitchenScreen() {
                   </View>
                 </Pressable>
                 <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel={`Remove ${recipe.title} from My Kitchen`}
+                  accessibilityHint="Double tap to remove recipe"
                   style={styles.removeButton}
                   onPress={() => handleRemove(recipe.id)}>
                   <SymbolView
@@ -115,7 +124,12 @@ export default function MyKitchenScreen() {
           <ThemedText type="small" style={styles.snackbarText}>
             Removed &quot;{undoData.recipe.title}&quot;
           </ThemedText>
-          <Pressable onPress={handleUndo} style={styles.undoButton}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Undo remove recipe"
+            accessibilityHint="Restores the removed recipe"
+            onPress={handleUndo}
+            style={styles.undoButton}>
             <ThemedText type="smallBold" style={{ color: '#ea580c' }}>UNDO</ThemedText>
           </Pressable>
         </View>

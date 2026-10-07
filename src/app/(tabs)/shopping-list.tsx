@@ -23,7 +23,12 @@ export default function ShoppingListScreen() {
         <View style={styles.headerTop}>
           <ThemedText type="title">🛒 Shopping List</ThemedText>
           {shoppingList.length > 0 && (
-            <Pressable onPress={clearShoppingList} style={styles.clearButton}>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="Clear all shopping list items"
+              accessibilityHint="Removes all items from shopping list"
+              onPress={clearShoppingList}
+              style={styles.clearButton}>
               <ThemedText type="smallBold" style={{ color: '#ef4444' }}>Clear All</ThemedText>
             </Pressable>
           )}
@@ -49,6 +54,10 @@ export default function ShoppingListScreen() {
             {shoppingList.map(item => (
               <Pressable
                 key={item.id}
+                accessibilityRole="checkbox"
+                accessibilityState={{ checked: item.checked }}
+                accessibilityLabel={`${item.quantity !== null ? `${item.quantity} ${item.unit || ''} ` : ''}${item.name}, for ${item.recipeTitle}`}
+                accessibilityHint="Double tap to toggle item as checked or unchecked"
                 style={[styles.itemCard, { backgroundColor: colors.backgroundElement }, item.checked && styles.itemCardChecked]}
                 onPress={() => toggleShoppingItem(item.id)}>
                 <View style={[styles.checkbox, item.checked && styles.checkboxChecked]}>
@@ -67,7 +76,12 @@ export default function ShoppingListScreen() {
                     For: {item.recipeTitle}
                   </ThemedText>
                 </View>
-                <Pressable onPress={() => removeShoppingItem(item.id)} style={styles.deleteButton}>
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel={`Delete ${item.name}`}
+                  accessibilityHint="Removes item from shopping list"
+                  onPress={() => removeShoppingItem(item.id)}
+                  style={styles.deleteButton}>
                   <SymbolView name={{ ios: 'xmark', android: 'close', web: 'close' }} size={16} tintColor="#888" />
                 </Pressable>
               </Pressable>

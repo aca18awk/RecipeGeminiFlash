@@ -54,7 +54,13 @@ function CookingPotButton({ recipeId }: { recipeId: string }) {
   };
 
   return (
-    <Pressable onPress={handlePress} style={styles.potButtonContainer}>
+    <Pressable
+      accessibilityRole="button"
+      accessibilityState={{ checked: isSaved }}
+      accessibilityLabel={isSaved ? 'Remove recipe from My Kitchen' : 'Save recipe to My Kitchen'}
+      accessibilityHint="Double tap to toggle recipe in your kitchen"
+      onPress={handlePress}
+      style={styles.potButtonContainer}>
       <Animated.View style={[styles.potButton, animatedStyle, isSaved && styles.potButtonActive]}>
         <SymbolView
           name={{ ios: 'fork.knife', android: 'restaurant', web: 'restaurant' }}
